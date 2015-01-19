@@ -42,7 +42,7 @@
     this.$element.removeClass(Affix.RESET).addClass('affix')
     var scrollTop = this.$target.scrollTop()
     var position  = this.$element.offset()
-    return (this.pinnedOffset = position.top - scrollTop)
+    return (this.pinnedOffset = Math.ceil(position.top) - scrollTop)
   }
 
   Affix.prototype.checkPositionWithEventLoop = function () {
@@ -63,7 +63,7 @@
     if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element)
     if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
 
-    var affix = this.unpin   != null && (scrollTop + this.unpin <= position.top) ? false :
+    var affix = this.unpin   != null && (scrollTop + this.unpin <= Math.ceil(position.top)) ? false :
                 offsetBottom != null && (Math.ceil(position.top) + this.$element.height() >= scrollHeight - offsetBottom) ? 'bottom' :
                 offsetTop    != null && (scrollTop <= offsetTop) ? 'top' : false
 
